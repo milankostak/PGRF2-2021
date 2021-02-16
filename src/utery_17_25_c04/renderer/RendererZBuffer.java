@@ -9,9 +9,9 @@ import java.util.List;
 
 public class RendererZBuffer implements GPURenderer {
 
-    private final Raster raster;
+    private final Raster<Integer> raster;
 
-    public RendererZBuffer(Raster raster) {
+    public RendererZBuffer(Raster<Integer> raster) {
         this.raster = raster;
     }
 

@@ -5,8 +5,6 @@ import utery_17_25_c04.rasterize.RasterBufferedImage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Panel extends JPanel {
 
@@ -17,7 +15,7 @@ public class Panel extends JPanel {
     Panel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         raster = new RasterBufferedImage(WIDTH, HEIGHT);
-        raster.setClearColor(Color.BLACK.getRGB());
+        raster.setClearValue(Color.BLACK.getRGB());
     }
 
     @Override
@@ -33,7 +31,7 @@ public class Panel extends JPanel {
         raster = newRaster;
     }
 
-    public Raster getRaster() {
+    public Raster<Integer> getRaster() {
         return raster;
     }
 

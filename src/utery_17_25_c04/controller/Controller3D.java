@@ -19,7 +19,7 @@ public class Controller3D {
 
     private final GPURenderer renderer;
     private final Panel panel;
-    private final Raster raster;
+    private final Raster<Integer> raster;
 
     private final List<Element> elements;
     private final List<Vertex> vb; // vertex buffer

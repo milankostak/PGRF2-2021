@@ -2,7 +2,7 @@ package utery_17_25_c04.rasterize;
 
 import java.util.Optional;
 
-public interface Raster {
+public interface Raster<T> {
 
     /**
      * Clear canvas
@@ -10,11 +10,11 @@ public interface Raster {
     void clear();
 
     /**
-     * Set clear color
+     * Set clear value
      *
-     * @param clearColor clear color
+     * @param clearValue clear value
      */
-    void setClearColor(int clearColor);
+    void setClearValue(T clearValue);
 
     /**
      * Get horizontal size
@@ -31,21 +31,21 @@ public interface Raster {
     int getHeight();
 
     /**
-     * Get pixel color at [x,y] position
+     * Get element value at [x,y] position
      *
      * @param x horizontal coordinate
      * @param y vertical coordinate
-     * @return pixel color
+     * @return element value
      */
-    Optional<Integer> getPixel(int x, int y);
+    Optional<T> getElement(int x, int y);
 
     /**
-     * Set pixel color at [x,y] position
+     * Set element value at [x,y] position
      *
      * @param x     horizontal coordinate
      * @param y     vertical coordinate
-     * @param color pixel color
+     * @param element element value
      */
-    void setPixel(int x, int y, int color);
+    void setElement(int x, int y, T element);
 
 }
