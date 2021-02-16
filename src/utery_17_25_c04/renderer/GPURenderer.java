@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GPURenderer {
 
-    void draw(List<Element> elements, List<Vertex> vb, List<Integer> ib);
+    void draw(List<Element> elements, List<Integer> ib, List<Vertex> vb);
 
     void clear();
 
