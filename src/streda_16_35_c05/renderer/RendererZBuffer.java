@@ -5,10 +5,10 @@ import transforms.Mat4;
 
 public class RendererZBuffer implements GPURenderer {
 
-    private final Raster raster;
+    private final Raster<Integer> imageRaster;
 
-    public RendererZBuffer(Raster raster) {
-        this.raster = raster;
+    public RendererZBuffer(Raster<Integer> imageRaster) {
+        this.imageRaster = imageRaster;
     }
 
     @Override

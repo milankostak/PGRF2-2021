@@ -11,7 +11,7 @@ import java.awt.event.*;
 public class Controller3D {
 
     private final Panel panel;
-    private final Raster raster;
+    private final Raster<Integer> imageRaster;
     private final GPURenderer renderer;
 
     private Mat4 model, projection;
@@ -19,8 +19,8 @@ public class Controller3D {
 
     public Controller3D(Panel panel) {
         this.panel = panel;
-        this.raster = panel.getRaster();
-        this.renderer = new RendererZBuffer(raster);
+        this.imageRaster = panel.getRaster();
+        this.renderer = new RendererZBuffer(imageRaster);
 
         initMatrices();
         initListeners(panel);
