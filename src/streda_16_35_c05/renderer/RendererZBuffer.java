@@ -3,7 +3,6 @@ package streda_16_35_c05.renderer;
 import streda_16_35_c05.model.Element;
 import streda_16_35_c05.model.ElementType;
 import streda_16_35_c05.model.Vertex;
-import streda_16_35_c05.rasterize.LineRasterizer;
 import streda_16_35_c05.rasterize.LineRasterizerGraphics;
 import streda_16_35_c05.rasterize.Raster;
 import transforms.Mat4;
@@ -44,7 +43,7 @@ public class RendererZBuffer implements GPURenderer {
     }
 
     private void prepareTriangle(Vertex v1, Vertex v2, Vertex v3) {
-        LineRasterizer lineRasterizer = new LineRasterizerGraphics(imageRaster);
+        LineRasterizerGraphics lineRasterizer = new LineRasterizerGraphics(imageRaster);
         lineRasterizer.rasterize((int) v1.x, (int) v1.y, (int) v2.x, (int) v2.y, Color.RED);
         lineRasterizer.rasterize((int) v1.x, (int) v1.y, (int) v3.x, (int) v3.y, Color.CYAN);
         lineRasterizer.rasterize((int) v3.x, (int) v3.y, (int) v2.x, (int) v2.y, Color.WHITE);

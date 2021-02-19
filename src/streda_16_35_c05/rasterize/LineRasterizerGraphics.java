@@ -2,16 +2,17 @@ package streda_16_35_c05.rasterize;
 
 import java.awt.*;
 
-public class LineRasterizerGraphics extends LineRasterizer {
+@Deprecated
+public class LineRasterizerGraphics {
 
-    public LineRasterizerGraphics(Raster raster) {
-        super(raster);
+    private final RasterBufferedImage imageBuffer;
+
+    public LineRasterizerGraphics(Raster<Integer> imageBuffer) {
+        this.imageBuffer = ((RasterBufferedImage) imageBuffer);
     }
 
-    @Override
     public void rasterize(int x1, int y1, int x2, int y2, Color color) {
-        RasterBufferedImage rasterBufferedImage = (RasterBufferedImage) raster;
-        Graphics g = rasterBufferedImage.getGraphics();
+        Graphics g = imageBuffer.getGraphics();
         g.setColor(color);
         g.drawLine(x1, y1, x2, y2);
     }

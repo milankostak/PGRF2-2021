@@ -58,7 +58,7 @@ public class RendererZBuffer implements GPURenderer {
     }
 
 //    private void prepareTriangle(Vertex v1, Vertex v2, Vertex v3) {
-//        LineRasterizer lineRasterizer = new LineRasterizerGraphics(raster);
+//        LineRasterizerGraphics lineRasterizer = new LineRasterizerGraphics(raster);
 //        lineRasterizer.rasterize((int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, v1.getColor());
 //        lineRasterizer.rasterize((int)v1.x, (int)v1.y, (int)v3.x, (int)v3.y, v1.getColor());
 //        lineRasterizer.rasterize((int)v2.x, (int)v2.y, (int)v3.x, (int)v3.y, v2.getColor());
