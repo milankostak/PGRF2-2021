@@ -1,8 +1,8 @@
 ## Cvičení
 
-[cvičení úterý 17:25](https://github.com/milankostak/PGRF1-2020/tree/master/src/utery_17_25_c04)
+[cvičení úterý 17:25](https://github.com/milankostak/PGRF2-2021/tree/master/src/utery_17_25_c04)
 
-[cvičení středa 16:35](https://github.com/milankostak/PGRF1-2020/tree/master/src/streda_16_35_c05)
+[cvičení středa 16:35](https://github.com/milankostak/PGRF2-2021/tree/master/src/streda_16_35_c05)
 
 
 ## Testy
