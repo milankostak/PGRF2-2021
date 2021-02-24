@@ -2,18 +2,18 @@ package utery_17_25_c04.model;
 
 public class Element {
 
-    private final ElementType elementType;
+    private final TopologyType topologyType;
     private final int start; // kde v index bufferu začít indexovat
     private final int count; // kolik indexů od startu se má použít
 
-    public Element(ElementType elementType, int start, int count) {
-        this.elementType = elementType;
+    public Element(TopologyType topologyType, int start, int count) {
+        this.topologyType = topologyType;
         this.start = start;
         this.count = count;
     }
 
-    public ElementType getElementType() {
-        return elementType;
+    public TopologyType getTopologyType() {
+        return topologyType;
     }
 
     public int getStart() {

@@ -2,7 +2,7 @@ package utery_17_25_c04.controller;
 
 import transforms.*;
 import utery_17_25_c04.model.Element;
-import utery_17_25_c04.model.ElementType;
+import utery_17_25_c04.model.TopologyType;
 import utery_17_25_c04.model.Vertex;
 import utery_17_25_c04.rasterize.Raster;
 import utery_17_25_c04.renderer.GPURenderer;
@@ -45,17 +45,17 @@ public class Controller3D {
     }
 
     private void initObjects() {
-        vb.add(new Vertex(new Point3D(10, 10, 1), Color.RED)); // 0 // ten nejvíce vlevo
-        vb.add(new Vertex(new Point3D(100, 300, 1), Color.RED)); // 1 // ten nejvíce dole
-        vb.add(new Vertex(new Point3D(200, 50, 1), Color.RED)); // 2 // ten společný
-        vb.add(new Vertex(new Point3D(1, 1, 1), Color.RED)); // 3 // ten nejvíce nahoře
-        vb.add(new Vertex(new Point3D(1, 1, 1), Color.RED)); // 4 // ten nejvíce vpravo
+        vb.add(new Vertex(new Point3D(10, 10, 1), new Col(255, 0, 0))); // 0 // ten nejvíce vlevo
+        vb.add(new Vertex(new Point3D(100, 300, 1), new Col(255, 0, 0))); // 1 // ten nejvíce dole
+        vb.add(new Vertex(new Point3D(200, 50, 1), new Col(255, 0, 0))); // 2 // ten společný
+        vb.add(new Vertex(new Point3D(1, 1, 1), new Col(255, 0, 0))); // 3 // ten nejvíce nahoře
+        vb.add(new Vertex(new Point3D(1, 1, 1), new Col(255, 0, 0))); // 4 // ten nejvíce vpravo
 
-        vb.add(new Vertex(new Point3D(1, 1, 1), Color.BLUE)); // 5 // ten nahoře
-        vb.add(new Vertex(new Point3D(1, 1, 1), Color.BLUE)); // 6 // ten dole
-
-        vb.add(new Vertex(new Point3D(1, 1, 1), Color.GREEN)); // 7 // vpravo
-        vb.add(new Vertex(new Point3D(1, 1, 1), Color.GREEN)); // 8 // vlevo
+//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.BLUE)); // 5 // ten nahoře
+//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.BLUE)); // 6 // ten dole
+//
+//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.GREEN)); // 7 // vpravo
+//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.GREEN)); // 8 // vlevo
 
         ib.add(0);
         ib.add(1);
@@ -79,11 +79,11 @@ public class Controller3D {
         // 2 úsečky
         //  - kkaždá má 2 vrcholy (vertexy)
 
-        elements.add(new Element(ElementType.TRIANGLE, 0, 6));
+        elements.add(new Element(TopologyType.TRIANGLE, 0, 6));
         // 0 -> nultý prvek v index bufferu
         // 6 -> použije se 6 indexů - 1 trojúhelník potřebuje 3 indexy, takže budou 2 trojúhelníky
 
-        elements.add(new Element(ElementType.LINE, 6, 4));
+        elements.add(new Element(TopologyType.LINE, 6, 4));
         // 6 -> jako první vzít šestý prvek v index bufferu
         // 4 -> chci 2 úsečky a každá úsečka má 2 indexy
 
@@ -92,9 +92,9 @@ public class Controller3D {
     }
 
 //    private void initObjects2() {
-//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.RED)); // 0 // ten nejvíce vlevo
-//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.RED)); // 1 // ten nejvíce dole
-//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.RED)); // 2 // ten společný
+//        vb.add(new Vertex(new Point3D(1, 1, 1), new Col(255, 0, 0))); // 0 // ten nejvíce vlevo
+//        vb.add(new Vertex(new Point3D(1, 1, 1), new Col(255, 0, 0))); // 1 // ten nejvíce dole
+//        vb.add(new Vertex(new Point3D(1, 1, 1), new Col(255, 0, 0))); // 2 // ten společný
 //
 //        vb.add(new Vertex(new Point3D(1, 1, 1), Color.BLUE)); // 3 // ten nahoře
 //        vb.add(new Vertex(new Point3D(1, 1, 1), Color.BLUE)); // 4 // ten dole
@@ -102,8 +102,8 @@ public class Controller3D {
 //        vb.add(new Vertex(new Point3D(1, 1, 1), Color.GREEN)); // 5 // vpravo
 //        vb.add(new Vertex(new Point3D(1, 1, 1), Color.GREEN)); // 6 // vlevo
 //
-//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.RED)); // 7 // ten nejvíce nahoře
-//        vb.add(new Vertex(new Point3D(1, 1, 1), Color.RED)); // 8 // ten nejvíce vpravo
+//        vb.add(new Vertex(new Point3D(1, 1, 1), new Col(255, 0, 0))); // 7 // ten nejvíce nahoře
+//        vb.add(new Vertex(new Point3D(1, 1, 1), new Col(255, 0, 0))); // 8 // ten nejvíce vpravo
 //
 //        ib.add(3);
 //        ib.add(4);
