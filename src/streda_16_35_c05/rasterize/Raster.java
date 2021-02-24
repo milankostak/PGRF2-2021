@@ -37,7 +37,7 @@ public interface Raster<T> {
      * @param y vertical coordinate
      * @return value
      */
-    Optional<T> getValue(int x, int y);
+    Optional<T> getElement(int x, int y);
 
     /**
      * Set value at [x,y] position

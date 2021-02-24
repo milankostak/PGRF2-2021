@@ -1,7 +1,7 @@
 package streda_16_35_c05.controller;
 
 import streda_16_35_c05.model.Element;
-import streda_16_35_c05.model.ElementType;
+import streda_16_35_c05.model.TopologyType;
 import streda_16_35_c05.model.Vertex;
 import streda_16_35_c05.rasterize.Raster;
 import streda_16_35_c05.renderer.GPURenderer;
@@ -44,9 +44,9 @@ public class Controller3D {
         // 5 červených vrcholů
         vertexBuffer.add(new Vertex(new Point3D(200, 200, 0), new Col(255, 0, 0))); // 0 // nejvíce vlevo
         vertexBuffer.add(new Vertex(new Point3D(600, 350, 0), new Col(255, 0, 0))); // 1 // nejvíce dole
-        vertexBuffer.add(new Vertex(new Point3D(450, 50, 0), new Col(255, 0, 0))); // 2 // společný
-        vertexBuffer.add(new Vertex(new Point3D(), new Col(255, 0, 0))); // 3 // nejvíce vpravo
-        vertexBuffer.add(new Vertex(new Point3D(), new Col(255, 0, 0))); // 4 // nejvíce nahoře
+        vertexBuffer.add(new Vertex(new Point3D(1, 5, 3), new Col(255, 0, 0))); // 2 // společný
+        vertexBuffer.add(new Vertex(new Point3D(3, 4, -5), new Col(255, 0, 0))); // 3 // nejvíce vpravo
+        vertexBuffer.add(new Vertex(new Point3D(-1, -2, -10), new Col(255, 0, 0))); // 4 // nejvíce nahoře
         // 2 modré vrcholy
         vertexBuffer.add(new Vertex(new Point3D(), new Col(0, 0, 255))); // 5 // nahoře
         vertexBuffer.add(new Vertex(new Point3D(), new Col(0, 0, 255))); // 6 // dole
@@ -70,8 +70,8 @@ public class Controller3D {
         indexBuffer.add(7);
         indexBuffer.add(8);
 
-        elementBuffer.add(new Element(ElementType.TRIANGLE, 0, 6));
-        elementBuffer.add(new Element(ElementType.LINE, 6, 4));
+        elementBuffer.add(new Element(TopologyType.TRIANGLE, 0, 6));
+        elementBuffer.add(new Element(TopologyType.LINE, 6, 4));
 
         renderer.draw(elementBuffer, indexBuffer, vertexBuffer);
 

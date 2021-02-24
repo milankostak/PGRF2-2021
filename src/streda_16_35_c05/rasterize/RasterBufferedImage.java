@@ -34,7 +34,7 @@ public class RasterBufferedImage implements Raster<Integer> {
     }
 
     @Override
-    public Optional<Integer> getValue(int x, int y) {
+    public Optional<Integer> getElement(int x, int y) {
         if (x >= 0 && y >= 0 && x < getWidth() && y < getHeight()) {
             return Optional.of(img.getRGB(x, y));
         } else {
