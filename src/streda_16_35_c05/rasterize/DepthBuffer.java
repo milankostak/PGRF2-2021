@@ -14,6 +14,9 @@ public class DepthBuffer implements Raster<Double> {
         width = raster.getWidth();
         height = raster.getHeight();
         data = new double[width][height];
+
+        setClearValue(1d);
+        clear();
     }
 
     @Override

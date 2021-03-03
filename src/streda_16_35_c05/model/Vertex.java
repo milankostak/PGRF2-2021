@@ -2,6 +2,9 @@ package streda_16_35_c05.model;
 
 import transforms.Col;
 import transforms.Point3D;
+import transforms.Vec3D;
+
+import java.util.Optional;
 
 public class Vertex {
 
@@ -24,6 +27,17 @@ public class Vertex {
 
     public Vertex add(Vertex v) {
         return new Vertex(point.add(v.getPoint()), color.add(v.getColor()));
+    }
+
+    public Optional<Vertex> dehomog() {
+//        Optional<Vec3D> dehomog = point.dehomog();
+//        if (dehomog.isPresent()) {
+//            return Optional.of(new Vertex(new Point3D(dehomog.get()), color));
+//        } else {
+//            return Optional.empty();
+//        }
+
+        return point.dehomog().map(vec3D -> new Vertex(new Point3D(vec3D), color));
     }
 
     public Point3D getPoint() {

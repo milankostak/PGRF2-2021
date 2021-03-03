@@ -4,6 +4,10 @@ import java.util.Optional;
 
 public interface Raster<T> {
 
+    default boolean checkBounds(int x, int y) {
+        return x >= 0 && y >= 0 && x < getWidth() && y < getHeight();
+    }
+
     /**
      * Clear raster
      */

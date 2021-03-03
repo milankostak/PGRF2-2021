@@ -4,15 +4,11 @@ import streda_16_35_c05.model.Element;
 import streda_16_35_c05.model.TopologyType;
 import streda_16_35_c05.model.Vertex;
 import streda_16_35_c05.rasterize.DepthBuffer;
-import streda_16_35_c05.rasterize.LineRasterizerGraphics;
 import streda_16_35_c05.rasterize.Raster;
-import transforms.Mat4;
-import transforms.Mat4Identity;
-import transforms.Point3D;
-import transforms.Vec3D;
+import transforms.*;
 
-import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
 public class RendererZBuffer implements GPURenderer {
 
@@ -109,6 +105,13 @@ public class RendererZBuffer implements GPURenderer {
             drawTriangle(a, ab, ac);
 
         } else if (c.getZ() < 0) {
+            double t1 = (0 - b.getZ()) / (c.getZ() - b.getZ());
+            Vertex bc = b.mul(1 - t1).add(c.mul(t1));
+            drawTriangle(a, b, bc);
+
+            double t2 = (0 - a.getZ()) / (c.getZ() - a.getZ());
+            Vertex ac = a.mul(1 - t2).add(c.mul(t2));
+            drawTriangle(a, bc, ac);
 
         } else {
             // vidíme celý trojúhelník (podle Z)
@@ -117,23 +120,98 @@ public class RendererZBuffer implements GPURenderer {
     }
 
     private void drawTriangle(Vertex a, Vertex b, Vertex c) {
-        LineRasterizerGraphics lineRasterizer = new LineRasterizerGraphics(imageRaster);
-        lineRasterizer.rasterize((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY(), Color.RED);
-        lineRasterizer.rasterize((int) a.getX(), (int) a.getY(), (int) c.getX(), (int) c.getY(), Color.CYAN);
-        lineRasterizer.rasterize((int) c.getX(), (int) c.getY(), (int) b.getX(), (int) b.getY(), Color.WHITE);
+        // 1. dehomogenizace
+        Optional<Vertex> oA = a.dehomog();
+        Optional<Vertex> oB = b.dehomog();
+        Optional<Vertex> oC = c.dehomog();
+
+        // zahodit trojúhelník, pokdu některý vrchol má w==0
+        if (oA.isEmpty() || oB.isEmpty() || oC.isEmpty()) return;
+
+        a = oA.get();
+        b = oB.get();
+        c = oC.get();
+
+        // 2. transformace do okna
+        a = transformToWindow(a);
+        b = transformToWindow(b);
+        c = transformToWindow(c);
+
+        // 3. seřazení podle Y
+        // cíl: a.y < b.y < c.y
+        if (a.getY() > b.getY()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
+        }
+        if (b.getY() > c.getY()) {
+            Vertex temp = b;
+            b = c;
+            c = temp;
+        }
+        if (a.getY() > b.getY()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
+        }
+
+        // 4. interpolace podle Y
+        // slide 124
+        // A -> B
+        long start = (long) Math.max(Math.ceil(a.getY()), 0);
+        double end = Math.min(b.getY(), imageRaster.getHeight() - 1);
+        for (long y = start; y <= end; y++) {
+            double t1 = (y - a.getY()) / (b.getY() - a.getY());
+            double t2 = (y - a.getY()) / (c.getY() - a.getY());
+
+            Vertex ab = a.mul(1 - t1).add(b.mul(t1));
+            Vertex ac = a.mul(1 - t2).add(c.mul(t2));
+
+            fillLine(y, ab, ac);
+        }
+
+        // B -> C
+        // TODO
     }
 
-    private Vec3D transformToWindow(Point3D vec) {
-        return new Vec3D(vec)
+    private Vertex transformToWindow(Vertex vertex) {
+        Vec3D vec3D = new Vec3D(vertex.getPoint())
                 .mul(new Vec3D(1, -1, 1)) // Y jde nahoru a my chceme, aby šlo dolů
                 .add(new Vec3D(1, 1, 0)) // (0,0) je uprostřed a my chceme, aby bylo vlevo nahoře
                 // máme <0;2> -> vynásobíme polovinou velikosti plátna
                 .mul(new Vec3D(imageRaster.getWidth() / 2f, imageRaster.getHeight() / 2f, 1));
+
+        return new Vertex(new Point3D(vec3D), vertex.getColor());
+    }
+
+    private void fillLine(long y, Vertex a, Vertex b) {
+        if (a.getX() > b.getX()) {
+            Vertex temp = a;
+            a = b;
+            b = temp;
+        }
+
+        long start = (long) Math.max(Math.ceil(a.getX()), 0);
+        double end = Math.min(b.getX(), imageRaster.getWidth() - 1);
+        for (long x = start; x <= end; x++) {
+            double t = (x - a.getX()) / (b.getX() - a.getX());
+            Vertex finalVertex = a.mul(1 - t).add(b.mul(t));
+
+            drawPixel((int)x, (int)y, finalVertex.getZ(), finalVertex.getColor());
+        }
+    }
+
+    private void drawPixel(int x, int y, double z, Col color) {
+        Optional<Double> zOptional = depthBuffer.getElement(x, y);
+        if (zOptional.isPresent() && z < zOptional.get()) {
+            depthBuffer.setElement(x, y, z);
+            imageRaster.setElement(x, y, color.getRGB());
+        }
     }
 
     @Override
     public void clear() {
-
+        // TODO clear zb ib
     }
 
     @Override
