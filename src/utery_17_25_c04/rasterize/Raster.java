@@ -4,6 +4,10 @@ import java.util.Optional;
 
 public interface Raster<T> {
 
+    default boolean checkBounds(int x, int y) {
+        return x >= 0 && y >= 0 && x < getWidth() && y < getHeight();
+    }
+
     /**
      * Clear canvas
      */
@@ -42,8 +46,8 @@ public interface Raster<T> {
     /**
      * Set element value at [x,y] position
      *
-     * @param x     horizontal coordinate
-     * @param y     vertical coordinate
+     * @param x       horizontal coordinate
+     * @param y       vertical coordinate
      * @param element element value
      */
     void setElement(int x, int y, T element);

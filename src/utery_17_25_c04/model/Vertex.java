@@ -2,6 +2,9 @@ package utery_17_25_c04.model;
 
 import transforms.Col;
 import transforms.Point3D;
+import transforms.Vec3D;
+
+import java.util.Optional;
 
 public class Vertex {
 
@@ -22,9 +25,20 @@ public class Vertex {
         return new Vertex(point.mul(t), color.mul(t));
     }
 
-//    public Vertex add(Vertex b) {
-//
-//    }
+    public Vertex add(Vertex other) {
+        return new Vertex(point.add(other.getPoint()), color.add(other.getColor()));
+    }
+
+    public Optional<Vertex> dehomog() {
+//        Optional<Vec3D> dehomog = point.dehomog();
+//        if (dehomog.isPresent()) {
+//            Vertex newVertex = new Vertex(new Point3D(dehomog.get()), color);
+//            return Optional.of(newVertex);
+//        } else {
+//            return Optional.empty();
+//        }
+        return point.dehomog().map(vec3D -> new Vertex(new Point3D(vec3D), color));
+    }
 
     public Point3D getPoint() {
         return point;
