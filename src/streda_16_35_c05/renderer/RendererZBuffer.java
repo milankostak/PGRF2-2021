@@ -5,6 +5,7 @@ import streda_16_35_c05.model.TopologyType;
 import streda_16_35_c05.model.Vertex;
 import streda_16_35_c05.rasterize.DepthBuffer;
 import streda_16_35_c05.rasterize.Raster;
+import streda_16_35_c05.shader.Shader;
 import transforms.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class RendererZBuffer implements GPURenderer {
     private final Raster<Double> depthBuffer;
 
     private Mat4 model, view, projection;
+    private Shader<Vertex, Col> shader;
 
     public RendererZBuffer(Raster<Integer> imageRaster) {
         this.imageRaster = imageRaster;
@@ -125,7 +127,7 @@ public class RendererZBuffer implements GPURenderer {
         Optional<Vertex> oB = b.dehomog();
         Optional<Vertex> oC = c.dehomog();
 
-        // zahodit trojúhelník, pokdu některý vrchol má w==0
+        // zahodit trojúhelník, pokud některý vrchol má w==0
         if (oA.isEmpty() || oB.isEmpty() || oC.isEmpty()) return;
 
         a = oA.get();
@@ -197,7 +199,8 @@ public class RendererZBuffer implements GPURenderer {
             double t = (x - a.getX()) / (b.getX() - a.getX());
             Vertex finalVertex = a.mul(1 - t).add(b.mul(t));
 
-            drawPixel((int)x, (int)y, finalVertex.getZ(), finalVertex.getColor());
+            final Col finalColor = shader.shade(finalVertex);
+            drawPixel((int) x, (int) y, finalVertex.getZ(), finalColor);
         }
     }
 
@@ -212,6 +215,11 @@ public class RendererZBuffer implements GPURenderer {
     @Override
     public void clear() {
         // TODO clear zb ib
+    }
+
+    @Override
+    public void setShader(Shader<Vertex, Col> shader) {
+        this.shader = shader;
     }
 
     @Override

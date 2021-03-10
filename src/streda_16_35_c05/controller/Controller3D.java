@@ -6,12 +6,15 @@ import streda_16_35_c05.model.Vertex;
 import streda_16_35_c05.rasterize.Raster;
 import streda_16_35_c05.renderer.GPURenderer;
 import streda_16_35_c05.renderer.RendererZBuffer;
+import streda_16_35_c05.shader.BasicColorShader;
 import streda_16_35_c05.view.Panel;
 import transforms.*;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Controller3D {
 
@@ -57,6 +60,35 @@ public class Controller3D {
         indexBuffer.add(5);
 
         elementBuffer.add(new Element(TopologyType.TRIANGLE, 0, 6));
+
+//        renderer.setShader(new Shader<Vertex, Col>() {
+//            @Override
+//            public Col shade(Vertex c) {
+//                return c.getColor();
+//            }
+//        });
+//        renderer.setShader(Vertex::getColor);
+//
+//        renderer.setShader(new Shader<Vertex, Col>() {
+//            @Override
+//            public Col shade(Vertex c) {
+//                return new Col(0, 255, 0);
+//            }
+//        });
+//        renderer.setShader(v -> new Col(0, 255, 0));
+//
+//        final Shader<Vertex, Col> shader = v -> new Col(255, 255, 0);
+//        final Shader<Vertex, Col> shader = Vertex::getColor;
+//        renderer.setShader(shader);
+//
+//        renderer.setShader(v -> {
+//            double remainder = Math.round(v.getY()) % 2;
+//            return remainder == 0 ? new Col(255, 0, 0) : new Col(255, 255, 255);
+//            return new Col(v.getZ(), v.getZ(), v.getZ());
+//        });
+
+//        renderer.setShader(Vertex::getColor);
+        renderer.setShader(new BasicColorShader());
         renderer.draw(elementBuffer, indexBuffer, vertexBuffer);
         panel.repaint(); // pouze pro debug
     }
@@ -178,9 +210,12 @@ public class Controller3D {
         });
     }
 
-    private void display() {
+    private synchronized void display() {
         renderer.clear();
         // TODO draw
+
+        // set model, view, projection, ... shader
+        // draw(..)
         panel.repaint();
     }
 
