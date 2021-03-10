@@ -7,6 +7,8 @@ import utery_17_25_c04.model.Vertex;
 import utery_17_25_c04.rasterize.Raster;
 import utery_17_25_c04.renderer.GPURenderer;
 import utery_17_25_c04.renderer.RendererZBuffer;
+import utery_17_25_c04.shader.BasicColorShader;
+import utery_17_25_c04.shader.Shader;
 import utery_17_25_c04.view.Panel;
 
 import java.awt.*;
@@ -60,6 +62,15 @@ public class Controller3D {
         ib.add(5);
 
         elements.add(new Element(TopologyType.TRIANGLE, 0, 6));
+//        renderer.setShader(vertex -> new Col(255, 0, 0));
+//        renderer.setShader(vertex -> vertex.getColor());
+//        renderer.setShader(Vertex::getColor);
+//        renderer.setShader(vertex -> new Col(vertex.getColor().getG(), vertex.getColor().getR(), vertex.getColor().getB()));
+//        renderer.setShader(vertex -> {
+//            final double r = Math.round(vertex.getX()) % 2;
+//            return r == 0 ? new Col(Color.GREEN.getRGB()) : new Col(Color.BLUE.getRGB());
+//        });
+        renderer.setShader(new BasicColorShader());
         renderer.draw(elements, ib, vb);
         panel.repaint();
     }

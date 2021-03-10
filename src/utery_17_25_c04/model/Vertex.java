@@ -2,6 +2,7 @@ package utery_17_25_c04.model;
 
 import transforms.Col;
 import transforms.Point3D;
+import transforms.Vec2D;
 import transforms.Vec3D;
 
 import java.util.Optional;
@@ -10,6 +11,7 @@ public class Vertex {
 
     private final Point3D point;
     private final Col color;
+//    private final Vec2D texCoord;
 //    public final double x, y, z, w;
 
     public Vertex(Point3D point, Col color) {

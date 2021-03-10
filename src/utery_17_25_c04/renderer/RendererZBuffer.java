@@ -6,6 +6,7 @@ import utery_17_25_c04.model.TopologyType;
 import utery_17_25_c04.model.Vertex;
 import utery_17_25_c04.rasterize.DepthBuffer;
 import utery_17_25_c04.rasterize.Raster;
+import utery_17_25_c04.shader.Shader;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ public class RendererZBuffer implements GPURenderer {
     private final DepthBuffer depthBuffer;
 
     private Mat4 model, view, projection;
+    private Shader<Vertex, Col> shader;
 
     public RendererZBuffer(Raster<Integer> raster) {
         this.raster = raster;
@@ -210,7 +212,8 @@ public class RendererZBuffer implements GPURenderer {
             double t = (x - a.getX()) / (b.getX() - a.getX());
             Vertex finalVertex = a.mul(1 - t).add(b.mul(t));
 
-            drawPixel(x, (int) y, finalVertex.getZ(), finalVertex.getColor());
+            final Col finalColor = shader.shade(finalVertex);
+            drawPixel(x, (int) y, finalVertex.getZ(), finalColor);
         }
     }
 
@@ -229,6 +232,11 @@ public class RendererZBuffer implements GPURenderer {
                 // máme <0;2> -> vynásobíme polovinou velikosti plátna
                 .mul(new Vec3D(raster.getWidth() / 2f, raster.getHeight() / 2f, 1));
         return new Vertex(new Point3D(vec3D), vertex.getColor());
+    }
+
+    @Override
+    public void setShader(Shader<Vertex, Col> shader) {
+        this.shader = shader;
     }
 
     @Override
