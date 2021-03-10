@@ -13,7 +13,7 @@
 
 ## Projekty
 
-1. projekt - PŘEDBĚŽNĚ 6. týden: 19. března (všichni) (pátek)
+1. projekt - 6. týden: 19. března 23:59:59 (všichni) (pátek)
 2. projekt
    * beta - PŘEDBĚŽNĚ 10. týden: 13. dubna (úterní) a 14. dubna (středeční)
    * final - PŘEDBĚŽNĚ 12. týden: 29. dubna (všichni) (čtvrtek)
