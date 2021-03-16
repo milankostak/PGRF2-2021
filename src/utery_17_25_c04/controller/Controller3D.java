@@ -11,7 +11,6 @@ import utery_17_25_c04.shader.BasicColorShader;
 import utery_17_25_c04.shader.Shader;
 import utery_17_25_c04.view.Panel;
 
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -44,6 +43,7 @@ public class Controller3D {
         initMatrices();
         initListeners(panel);
         initObjects();
+//        display();
     }
 
     private void initObjects() {
@@ -212,12 +212,14 @@ public class Controller3D {
 //        panel.removeMouseMotionListener(drag);
     }
 
-    private void display() {
+    private synchronized void display() {
         renderer.clear();
 
         renderer.setModel(model);
         renderer.setView(camera.getViewMatrix());
         renderer.setProjection(projection);
+
+//        renderer.draw();
 
         // musíme nakonec říci, že panel má nový obsah zobrazit
         panel.repaint();
